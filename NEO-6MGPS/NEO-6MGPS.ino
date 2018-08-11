@@ -6,7 +6,11 @@ TinyGPS gps;
 
 void gpsdump(TinyGPS &gps);
 void printFloat(double f, int digits = 2);
-
+ long lat, lon;
+  float flat, flon;
+  unsigned long age, date, time, chars;
+  int year;
+  byte month, day, hour, minute, second, hundredths;
 void setup()  
 {
   // Oploen serial communications and wait for port to open:
@@ -48,6 +52,8 @@ void loop() // run over and over
     Serial.println("Acquired Data");
     Serial.println("-------------");
     gpsdump(gps);
+    Serial.println("lat:");printFloat(flat, 5);
+    Serial.println("long:");printFloat(flon, 5);
     delay(5000);
     Serial.println("-------------");
     Serial.println();
@@ -57,41 +63,29 @@ void loop() // run over and over
 
 void gpsdump(TinyGPS &gps)
 {
-  long lat, lon;
-  float flat, flon;
-  unsigned long age, date, time, chars;
-  int year;
-  byte month, day, hour, minute, second, hundredths;
+ 
   unsigned short sentences, failed;
 
-  //gps.get_position(&lat, &lon, &age);//ye dekh idhar decimal me nai aaya na it  was in 10 s ka ookwoke
-  //Serial.print("Lat/Long(10^-5 deg): "); Serial.print(lat); Serial.print(", "); Serial.print(lon); 
- // Serial.print(" Fix age: "); Serial.print(age); Serial.println("ms."); sunn yeh baar baar kya aaing
   
-  // On Arduino, GPS characters may be lost during lengthy Serial.print()
-  // On Teensy, Serial prints to USB, which has large output buffering and upload kre? rukk
-  //   runs very fast, so it's not necessary to worry about missing 4800
-  //   baud GPS characters.
-
-  gps.f_get_position(&flat, &flon, &age);// rashmiii sunn flat,flon krne se sab degrees me aa rha hai na samajh rhi hai? nai
-  Serial.print("Lat/Long(float): "); printFloat(flat, 5); Serial.print(", "); printFloat(flon, 5);
-    Serial.print(" Fix age: "); Serial.print(age); Serial.println("ms.");
+  gps.f_get_position(&flat, &flon, &age);
+ // Serial.print("Lat/Long(float): "); printFloat(flat, 5); Serial.print(", "); printFloat(flon, 5);
+    //Serial.print(" Fix age: "); Serial.print(age); Serial.println("ms.");
 
  
 
   gps.crack_datetime(&year, &month, &day, &hour, &minute, &second, &hundredths, &age);
-  Serial.print("Date: "); Serial.print(static_cast<int>(month)); Serial.print("/"); 
-    Serial.print(static_cast<int>(day)); Serial.print("/"); Serial.print(year);
-  Serial.print("  Time: "); Serial.print(static_cast<int>(hour+05));  Serial.print(":"); //Serial.print("UTC +08:00 Malaysia");
-    Serial.print(static_cast<int>(minute+30)); Serial.print(":"); Serial.print(static_cast<int>(second));
-    Serial.print("."); Serial.print(static_cast<int>(hundredths)); Serial.print(" UTC +05:30 India");
-  Serial.print("  Fix age: ");  Serial.print(age); Serial.println("ms.");
+  //Serial.print("Date: "); Serial.print(static_cast<int>(month)); Serial.print("/"); 
+    //Serial.print(static_cast<int>(day)); Serial.print("/"); Serial.print(year);
+  //Serial.print("  Time: "); Serial.print(static_cast<int>(hour+05));  Serial.print(":"); //Serial.print("UTC +08:00 Malaysia");
+    //Serial.print(static_cast<int>(minute+30)); Serial.print(":"); Serial.print(static_cast<int>(second));
+   // Serial.print("."); Serial.print(static_cast<int>(hundredths)); Serial.print(" UTC +05:30 India");
+ // Serial.print("  Fix age: ");  Serial.print(age); Serial.println("ms.");
 
 
-  Serial.print("Alt(float): "); printFloat(gps.f_altitude()); Serial.print(" Course(float): ");
-    printFloat(gps.f_course()); Serial.println();
-  Serial.print("Speed");Serial.print(" (kmph): ");
-    printFloat(gps.f_speed_kmph()); Serial.println();
+ // Serial.print("Alt(float): "); printFloat(gps.f_altitude()); Serial.print(" Course(float): ");
+   // printFloat(gps.f_course()); Serial.println();
+  //Serial.print("Speed");Serial.print(" (kmph): ");
+   // printFloat(gps.f_speed_kmph()); Serial.println();
 
 }
 
