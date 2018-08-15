@@ -31,7 +31,7 @@ void SendMessage(){
 
   mySerial.println("AT+CMGF=1");
   delay(1000);
-  mySerial.println("AT+CMGS=\"+919892466035\"\r");
+  mySerial.println("AT+CMGS=\"+917718833285\"\r");
   delay(1000);
   mySerial.println("Hello World !!");
   mySerial.println("Sent from GSM Module");

@@ -6,7 +6,7 @@ TinyGPS gps;
 
 void gpsdump(TinyGPS &gps);
 void printFloat(double f, int digits = 2);
- long lat, lon;
+  long lat, lon;
   float flat, flon;
   unsigned long age, date, time, chars;
   int year;
@@ -17,14 +17,6 @@ void setup()
   Serial.begin(9600);
   // set the data rate for the SoftwareSerial port
   mySerial.begin(9600);
-  delay(1000);
-  Serial.println("uBlox Neo 6M");
-  Serial.print("Testing TinyGPS library v. "); Serial.println(TinyGPS::library_version());
-  Serial.println("by Mikal Hart");
-  Serial.println();
-  Serial.print("Sizeof(gpsobject) = "); 
-  Serial.println(sizeof(TinyGPS));
-  Serial.println(); 
 }
 
 void loop() // run over and over
@@ -49,8 +41,7 @@ void loop() // run over and over
   
   if (newdata) 
   {
-    Serial.println("Acquired Data");
-    Serial.println("-------------");
+ 
     gpsdump(gps);
     Serial.println("lat:");printFloat(flat, 5);
     Serial.println("long:");printFloat(flon, 5);
@@ -63,30 +54,7 @@ void loop() // run over and over
 
 void gpsdump(TinyGPS &gps)
 {
- 
-  unsigned short sentences, failed;
-
-  
   gps.f_get_position(&flat, &flon, &age);
- // Serial.print("Lat/Long(float): "); printFloat(flat, 5); Serial.print(", "); printFloat(flon, 5);
-    //Serial.print(" Fix age: "); Serial.print(age); Serial.println("ms.");
-
- 
-
-  gps.crack_datetime(&year, &month, &day, &hour, &minute, &second, &hundredths, &age);
-  //Serial.print("Date: "); Serial.print(static_cast<int>(month)); Serial.print("/"); 
-    //Serial.print(static_cast<int>(day)); Serial.print("/"); Serial.print(year);
-  //Serial.print("  Time: "); Serial.print(static_cast<int>(hour+05));  Serial.print(":"); //Serial.print("UTC +08:00 Malaysia");
-    //Serial.print(static_cast<int>(minute+30)); Serial.print(":"); Serial.print(static_cast<int>(second));
-   // Serial.print("."); Serial.print(static_cast<int>(hundredths)); Serial.print(" UTC +05:30 India");
- // Serial.print("  Fix age: ");  Serial.print(age); Serial.println("ms.");
-
-
- // Serial.print("Alt(float): "); printFloat(gps.f_altitude()); Serial.print(" Course(float): ");
-   // printFloat(gps.f_course()); Serial.println();
-  //Serial.print("Speed");Serial.print(" (kmph): ");
-   // printFloat(gps.f_speed_kmph()); Serial.println();
-
 }
 
 void printFloat(double number, int digits)
