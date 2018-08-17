@@ -6,7 +6,7 @@ SoftwareSerial gsmSerial(9,10);//gsm
 TinyGPS gps;
 
 void gpsdump(TinyGPS &gps);
-void printFloat(double f, int digits = 2);//same na yes
+void printFloat(double f, int digits = 2);
   long lat, lon;
   float flat, flon;
   int year;
@@ -74,15 +74,15 @@ void loop()
    Serial.println();
   }
   
-if(flat>0 && flon>0){//this is if location is avail
+if(flat>0 && flon>0){
  SendMessage();
  delay(30000);
 }
-if(flat==0 && flon==0){// this is if this is not avail its worlking? yup
+if(flat==0 && flon==0){
 SendMessage1();
 delay(10000);
 }
-if(gsmSerial.available()>0){//? gsm ka availaible hai ki nai check krne ok
+if(gsmSerial.available()>0){
   Serial.write(gsmSerial.read());
   }
 /*if(delayFlag){
@@ -95,15 +95,15 @@ else if(!delayFlag){
 
 void SendMessage1()
 {
-  //while(i>0)// ab first time its true na then andar ka perform krega and
+  //while(i>0)
   gsmSerial.listen();
   gsmSerial.println("AT+CMGF=1");
   delay(1000);
-  gsmSerial.println("AT+CMGS=\"+917718833285\"\r");
+  gsmSerial.println("AT+CMGS=\"+919969215994\"\r");
   delay(1000);
-          message+="Human Attacked,Location could not be traced";
+          message+="NEED URGENT HELP,Location could not be traced";
           gsmSerial.println(message);
-  delay(100);//ok?k aage chal rashmii?yes mai sogyi thi sorry arey sorry yaar bas thoda sa ye dekh
+  delay(100);
   gsmSerial.println((char)26);
   delay(1000);
 }
@@ -114,9 +114,9 @@ void SendMessage()//same ok?
   
   gsmSerial.println("AT+CMGF=1");
   delay(1000);
-  gsmSerial.println("AT+CMGS=\"+917718833285\"\r");
+  gsmSerial.println("AT+CMGS=\"+919969215994\"\r");
   delay(1000);
-          message+="Human Attacked Click the link below https://www.google.com/maps/search/?api=1&query=";
+          message+="NEED URGENT HELP, Click the link below https://www.google.com/maps/search/?api=1&query=";
           message+=latFin;
           message+=",";
           message+=lonFin;
@@ -138,7 +138,7 @@ void gpsdump(TinyGPS &gps)
   gps.crack_datetime(&year, &month, &day, &hour, &minute, &second, &hundredths, &age);
 }
 
-void printFloat(double number, int digits)//ye default
+void printFloat(double number, int digits)
 {
   // Handle negative numbers
   if (number < 0.0) 
